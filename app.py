@@ -7,41 +7,6 @@ st.set_page_config(page_title="AI Agent Assignment", layout="wide")
 
 st.title("🤖 LangGraph Agent: Weather & RAG (Google Gemini)")
 
-# Sidebar for Setup
-with st.sidebar:
-    st.header("Configuration")
-    
-    # PDF Upload
-    uploaded_file = st.file_uploader("Upload Knowledge Base (PDF)", type="pdf")
-    if uploaded_file is not None:
-        save_path = f"./{uploaded_file.name}"
-        with open(save_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        
-        if st.button("Process PDF"):
-            with st.spinner("Ingesting PDF using Google Embeddings..."):
-                try:
-                    ingest_pdf(save_path)
-                    st.success("PDF processed and stored in Qdrant!")
-                except Exception as e:
-                    st.error(f"Error: {e}")
-
-    st.markdown("---")
-    
-    # Clear conversation button
-    if st.button("🗑️ Clear Conversation", use_container_width=True):
-        st.session_state.messages = []
-        if "conversation_manager" in st.session_state:
-            st.session_state.conversation_manager.clear_history()
-        st.rerun()
-    
-    st.markdown("---")
-    st.markdown("**Capabilities:**")
-    st.markdown("- 🌦️ Real-time Weather")
-    st.markdown("- 📄 Document QA (RAG)")
-    st.markdown("- 💬 Multi-turn Conversations")
-    st.markdown("---")
-    st.info("Powered by Google Gemini 2.0 Flash")
 
 # API Key Check
 if not os.getenv("GOOGLE_API_KEY"):

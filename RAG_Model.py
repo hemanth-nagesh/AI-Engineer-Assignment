@@ -40,7 +40,7 @@ def initialize_vector_store():
     )
     return vector_store
 
-def ingest_pdf(file_path):
+def ingest_pdf(file_path= "Stock Market.pdf"):
     """
     Ingests a PDF file, splits it, and stores embeddings in Qdrant.
     """
@@ -68,10 +68,8 @@ def get_retriever():
     """
     Returns a retriever interface for the vector store.
     """
+    print("Initializing vector store for retrieval...")
     vector_store = initialize_vector_store()
     return vector_store.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
-
-if __name__ == "__main__":
-    # For standalone execution to setup DB
-    ingest_pdf("Stock Market.pdf")
+ingest_pdf("Stock Market.pdf")
