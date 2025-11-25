@@ -1,4 +1,3 @@
-# AI-Engineer-Assignment
 # AI Agent with Weather & Document QA
 
 A conversational AI agent that fetches real-time weather data and answers questions from your PDF documents using RAG (Retrieval-Augmented Generation).
