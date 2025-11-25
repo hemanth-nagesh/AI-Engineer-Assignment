@@ -113,7 +113,7 @@ Run the test suite:
 pytest test_case.py -v
 ```
 
-# Test logs:
+# Test case logs:
 ```
 ========================================================================= test session starts =========================================================================
 platform win32 -- Python 3.12.4, pytest-9.0.1, pluggy-1.6.0 -- C:\Users\acer\Desktop\AI_Engineer\AI-Engineer-Assignment\ai_env\Scripts\python.exe
@@ -153,13 +153,7 @@ test_case.py::TestIntegration::test_conversation_manager_empty_input PASSED     
 test_case.py::TestErrorHandling::test_weather_api_malformed_response PASSED                                                                                      [ 96%] 
 test_case.py::TestErrorHandling::test_rag_retrieval_partial_failure PASSED                                                                                       [100%]
 
-========================================================================== warnings summary =========================================================================== 
-ai_env\Lib\site-packages\_pytest\config\__init__.py:1272
-  C:\Users\acer\Desktop\AI_Engineer\AI-Engineer-Assignment\ai_env\Lib\site-packages\_pytest\config\__init__.py:1272: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; langsmith
-    self._mark_plugins_for_rewrite(hook, disable_autoload)
-
--- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-==================================================================== 30 passed, 1 warning in 0.42s ==================================================================== 
+==================================================================== 30 passed in 0.42s ==================================================================== 
 ```
 
 ## LangSmith Integration
@@ -168,8 +162,11 @@ LangSmith provides complete visibility into agent's behavior.
 
 ### Screenshot Placeholders
 
+#### weather tool call with trace
 ![Weather_tool](./assets/weather_tool.png)
 
+#### RAG tool call with trace
 ![RAG_tool](./assets/RAG_Tool.png)
 
+#### RAG Retrive the content from the vectorDB
 ![RAG_Retriever](./assets/RAG_Retriever.png)
