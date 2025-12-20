@@ -4,14 +4,11 @@ from typing import Annotated, Literal, Optional
 from typing_extensions import TypedDict
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.tools import tool
 from langgraph.graph import StateGraph, END, START
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode
-from RAG_Model import get_retriever
+from RAG_Model_Mogodb import get_query_results as get_mongodb_retriever
 from dotenv import load_dotenv
-from langsmith import traceable, Client
-from langsmith.wrappers import wrap_openai
 
 load_dotenv()
 
@@ -19,9 +16,9 @@ load_dotenv()
 openweathermap_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
 langsmith_api_key = os.getenv("LANGCHAIN_API_KEY")
+mongodb_url = os.getenv("MONGODB_URL")
+use_mongodb = bool(mongodb_url)  # Use MongoDB if URL is provided
 
-# Initialize LangSmith Client (optional, for manual evaluation)
-langsmith_client = Client(api_key=langsmith_api_key) if langsmith_api_key else None
 
 # --- Constants ---
 SYSTEM_INSTRUCTION = """You are a helpful AI assistant. 
@@ -33,8 +30,6 @@ You have access to real-time weather data and a specific knowledge base (PDF) on
 
 # --- Tools ---
 
-@tool
-@traceable(name="get_weather_tool", tags=["weather", "api"])
 def get_weather(city: str):
     """
     Fetches real-time weather data for a specific city using OpenWeatherMap API.
@@ -65,19 +60,19 @@ def get_weather(city: str):
     except Exception as e:
         return f"Exception occurred: {str(e)}"
 
-@tool
-@traceable(name="retrieve_knowledge_tool", tags=["rag", "retrieval"])
+
 def retrieve_knowledge(query: str):
-    """
-    Retrieves information from the internal knowledge base (PDF) using RAG.
-    Use this when asked about specific document content, policies, or stored knowledge.
+    """ get knowledge retrieval tool for stock market related questions 
+    arg: query string
+    return: retrieved text from knowledge base
     """
     try:
-        retriever = get_retriever()
-        docs = retriever.invoke(query)
-        if not docs:
+        print("Retrieving knowledge from MongoDB...")
+        result = get_mongodb_retriever(query)
+        print(f"Retrieved result: {result}")
+        if not result:
             return "No relevant information found in the knowledge base."
-        return "\n\n".join([doc.page_content for doc in docs])
+        return result
     except Exception as e:
         return f"Error retrieving knowledge: {str(e)}"
 
@@ -93,11 +88,11 @@ llm = ChatGoogleGenerativeAI(
     api_key=gemini_api_key
 )
 
+
 # Bind tools to the LLM
 tools = [get_weather, retrieve_knowledge]
 llm_with_tools = llm.bind_tools(tools)
 
-@traceable(name="agent_node", tags=["agent", "decision"])
 def agent_node(state: AgentState):
     """
     The main agent node (Router/Decider).
@@ -184,11 +179,6 @@ def extract_text_from_response(content):
         return str(content)
 
 # --- Main query processing ---
-@traceable(
-    name="process_query",
-    tags=["main", "query-processing"],
-    metadata={"version": "1.0"}
-)
 def process_query(user_input: str, project_name: str = "langgraph-agent"):
     """
     Process a single user query through the agent graph.
@@ -209,14 +199,7 @@ def process_query(user_input: str, project_name: str = "langgraph-agent"):
         final_response = ""
         
         # Add run configuration for LangSmith
-        config = {
-            "run_name": f"Query: {user_input[:50]}...",
-            "tags": ["single-query"],
-            "metadata": {
-                "query_length": len(user_input),
-                "project": project_name
-            }
-        }
+        config = {}
         
         for event in app.stream(inputs, config=config):
             for key, value in event.items():
@@ -241,7 +224,6 @@ class ConversationManager:
         self.messages = []
         self.project_name = project_name
     
-    @traceable(name="send_message", tags=["conversation", "multi-turn"])
     def send_message(self, user_input: str):
         """Send a message and get response while maintaining history."""
         if not user_input or not user_input.strip():
@@ -254,15 +236,7 @@ class ConversationManager:
             final_response = ""
             
             # Add run configuration
-            config = {
-                "run_name": f"Conversation: {user_input[:40]}...",
-                "tags": ["multi-turn", f"thread-{self.thread_id}"],
-                "metadata": {
-                    "thread_id": self.thread_id,
-                    "message_count": len(self.messages),
-                    "project": self.project_name
-                }
-            }
+            config = {}
             
             for event in app.stream(inputs, config=config):
                 for key, value in event.items():

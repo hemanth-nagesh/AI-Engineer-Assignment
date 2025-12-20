@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 from Langgraph_Agent import ConversationManager
-from RAG_Model import ingest_pdf
 
 st.set_page_config(page_title="AI Agent Assignment", layout="wide")
 

@@ -1,0 +1,22 @@
+fastapi
+uvicorn[standard]
+websockets
+python-multipart
+pydantic
+aiofiles
+
+# MongoDB dependencies
+pymongo
+pymongo[srv]
+langchain-mongodb
+
+# Existing dependencies from the original project
+langchain
+langchain-community
+langchain-core
+langchain_groq
+langgraph
+google-generativeai
+python-dotenv
+requests
+pypdf

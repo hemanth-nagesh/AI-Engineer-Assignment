@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Interface - Real-time Logs</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <h1>AI Chat Interface</h1>
+                </div>
+                <div class="connection-status">
+                    <span id="status-indicator" class="status-indicator offline"></span>
+                    <span id="status-text">Disconnected</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Section -->
+            <section class="chat-section">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2><i class="fas fa-comments"></i> Chat with AI Assistant</h2>
+                        <button id="clear-chat" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Clear Chat
+                        </button>
+                    </div>
+                    
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="welcome-message">
+                            <i class="fas fa-hand-wave"></i>
+                            <h3>Welcome to AI Chat!</h3>
+                            <p>Ask me about the weather or questions about your documents. I'm here to help!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div id="typing-indicator" class="typing-indicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="message-input" 
+                                placeholder="Type your message here..." 
+                                class="message-input"
+                                maxlength="1000"
+                            >
+                            <button id="send-button" class="send-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="input-footer">
+                            <span id="char-count">0 / 1000</span>
+                            <div class="quick-actions">
+                                <button class="quick-action" data-message="What's the weather in New York?">
+                                    <i class="fas fa-cloud-sun"></i> Weather
+                                </button>
+                                <button class="quick-action" data-message="Tell me about the stock market">
+                                    <i class="fas fa-chart-line"></i> Documents
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section class="logs-section">
+                <div class="logs-container">
+                    <div class="logs-header">
+                        <h2><i class="fas fa-terminal"></i> Real-time Logs</h2>
+                        <div class="logs-controls">
+                            <button id="toggle-logs" class="btn btn-secondary">
+                                <i class="fas fa-eye"></i> Toggle
+                            </button>
+                            <button id="clear-logs" class="btn btn-secondary">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="logs-container" class="logs-content">
+                        <div class="log-entry info">
+                            <span class="log-time">System</span>
+                            <span class="log-level">INFO</span>
+                            <span class="log-message">Waiting for connection...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="stats">
+                    <span><i class="fas fa-message"></i> Messages: <span id="message-count">0</span></span>
+                    <span><i class="fas fa-clock"></i> Connected: <span id="connection-time">--:--</span></span>
+                </div>
+                <div class="footer-info">
+                    <span>Powered by FastAPI & WebSocket</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Connecting to server...</p>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="error-message">An error occurred.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary modal-close">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

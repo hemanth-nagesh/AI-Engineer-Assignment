@@ -1,1 +1,6 @@
 ai_env/
+.venv/
+.env
+temp/
+qdrant_db/
+MongoDB_RAG_Model.py

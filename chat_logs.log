@@ -1,0 +1,406 @@
+2025-12-17 12:13:44,492 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 12:13:47,163 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 12:13:47,164 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 12:13:47,203 - server - INFO - FastAPI server started successfully
+2025-12-17 12:14:26,949 - server - INFO - Client client_e3cywgeqw_1765953866527 connected
+2025-12-17 12:14:38,131 - server - INFO - Sending message to agent: hi there
+2025-12-17 12:16:06,415 - server - INFO - Client client_e3cywgeqw_1765953866527 disconnected
+2025-12-17 12:16:24,013 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 12:16:28,175 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 12:16:28,176 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 12:16:28,221 - server - INFO - FastAPI server started successfully
+2025-12-17 12:16:28,238 - server - INFO - Client client_e3cywgeqw_1765953866527 connected
+2025-12-17 12:17:11,421 - server - INFO - Sending message to agent: hi
+2025-12-17 12:17:11,745 - langchain_core.callbacks.manager - WARNING - Error in Client.on_chain_start callback: AttributeError("'Client' object has no attribute 'ignore_chain'")
+2025-12-17 12:17:20,946 - server - INFO - Client client_e3cywgeqw_1765953866527 disconnected
+2025-12-17 12:17:23,224 - server - INFO - Client client_se1dn6u82_1765954042875 connected
+2025-12-17 12:17:27,514 - server - INFO - Sending message to agent: hi
+2025-12-17 12:17:27,526 - langchain_core.callbacks.manager - WARNING - Error in Client.on_chain_start callback: AttributeError("'Client' object has no attribute 'ignore_chain'")
+2025-12-17 12:17:49,638 - server - INFO - Client client_se1dn6u82_1765954042875 disconnected
+2025-12-17 12:23:47,204 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 12:23:50,828 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 12:23:50,828 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 12:23:50,872 - server - INFO - FastAPI server started successfully
+2025-12-17 12:24:26,455 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 12:24:30,864 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 12:24:30,865 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 12:24:30,923 - server - INFO - FastAPI server started successfully
+2025-12-17 12:25:17,803 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 12:25:21,246 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 12:25:21,247 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 12:25:21,294 - server - INFO - FastAPI server started successfully
+2025-12-17 12:25:21,873 - server - INFO - Client client_jku9frbww_1765954521502 connected
+2025-12-17 12:25:40,177 - server - INFO - Sending message to agent: What's the weather in New York?
+2025-12-17 12:25:41,854 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:25:43,174 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:25:47,602 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-17 12:25:49,186 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:25:49,189 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-17 12:25:50,616 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-17 12:25:51,806 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:26:24,664 - server - INFO - Sending message to agent: what are the types of investors
+2025-12-17 12:26:26,349 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:26:26,353 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-17 12:26:27,265 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-17 12:26:30,238 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:27:09,734 - server - INFO - Sending message to agent: When to Start Investing?
+2025-12-17 12:27:11,481 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:27:11,502 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-17 12:27:11,964 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-17 12:27:13,179 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 12:31:18,680 - server - INFO - Client client_jku9frbww_1765954521502 disconnected
+2025-12-17 13:14:40,702 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 13:14:43,248 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 13:14:43,251 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 13:14:43,293 - server - INFO - FastAPI server started successfully
+2025-12-17 13:15:25,599 - server - INFO - Client client_6uu14d2db_1765957525269 connected
+2025-12-17 13:15:32,066 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-17 13:15:34,271 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 13:18:55,938 - server - INFO - Client client_6uu14d2db_1765957525269 disconnected
+2025-12-17 13:19:24,589 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-17 13:19:28,311 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-17 13:19:28,311 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-17 13:19:28,373 - server - INFO - FastAPI server started successfully
+2025-12-17 13:19:28,398 - server - INFO - Client client_6uu14d2db_1765957525269 connected
+2025-12-17 13:19:36,652 - server - INFO - Client client_6uu14d2db_1765957525269 disconnected
+2025-12-17 13:19:37,515 - server - INFO - Client client_lrkhxbj5d_1765957777184 connected
+2025-12-17 13:19:41,077 - server - INFO - Sending message to agent: hi
+2025-12-17 13:19:42,616 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 13:19:47,152 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-17 13:19:48,963 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-17 14:21:35,094 - server - INFO - Client client_lrkhxbj5d_1765957777184 disconnected
+2025-12-17 14:35:46,653 - server - INFO - Client client_lrkhxbj5d_1765957777184 connected
+2025-12-20 09:33:31,668 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:34:04,612 - MongoDB_RAG_Model - ERROR - Failed to initialize MongoDB connection: SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 694620155d813d00dacdfaf0, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-20 09:34:04,627 - server - INFO - FastAPI server started successfully
+2025-12-20 09:36:54,905 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:37:26,975 - MongoDB_RAG_Model - ERROR - Failed to initialize MongoDB connection: SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms), Timeout: 30.0s, Topology Description: <TopologyDescription id: 694620e0543e4be54e00d146, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>]>
+2025-12-20 09:37:26,976 - server - INFO - FastAPI server started successfully
+2025-12-20 09:37:56,206 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:38:28,781 - MongoDB_RAG_Model - ERROR - Failed to initialize MongoDB connection: SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms), Timeout: 30.0s, Topology Description: <TopologyDescription id: 6946211d4c7a1596e0d74101, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>]>
+2025-12-20 09:38:28,782 - server - INFO - FastAPI server started successfully
+2025-12-20 09:38:39,117 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:39:11,067 - MongoDB_RAG_Model - ERROR - Failed to initialize MongoDB connection: SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms),SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms), Timeout: 30.0s, Topology Description: <TopologyDescription id: 694621488c2af9afe5249847, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-00.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-01.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>, <ServerDescription ('ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: ac-vhlp1ps-shard-00-02.9vmw3as.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1000) (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>]>
+2025-12-20 09:39:11,067 - server - INFO - FastAPI server started successfully
+2025-12-20 09:50:44,742 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:50:47,135 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 09:50:47,135 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 09:50:47,185 - server - INFO - FastAPI server started successfully
+2025-12-20 09:53:12,625 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:53:15,081 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 09:53:15,081 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 09:53:15,123 - server - INFO - FastAPI server started successfully
+2025-12-20 09:54:42,172 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:54:44,688 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 09:54:44,688 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 09:54:44,733 - server - INFO - FastAPI server started successfully
+2025-12-20 09:56:08,894 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:56:11,783 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 09:56:11,783 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 09:56:11,839 - server - INFO - FastAPI server started successfully
+2025-12-20 09:58:04,627 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 09:58:06,905 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 09:58:06,905 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 09:58:06,956 - server - INFO - FastAPI server started successfully
+2025-12-20 09:58:39,210 - server - INFO - Client client_1ut88a0gv_1766204918843 connected
+2025-12-20 09:58:53,783 - server - INFO - Sending message to agent: hi there good morning
+2025-12-20 09:58:55,453 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 09:59:07,966 - server - INFO - Sending message to agent: how is the weather here
+2025-12-20 09:59:09,995 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 09:59:19,434 - server - INFO - Sending message to agent: bangalore
+2025-12-20 09:59:21,367 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 09:59:22,801 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 09:59:32,504 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 09:59:34,424 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:05:36,523 - server - INFO - Client client_1ut88a0gv_1766204918843 disconnected
+2025-12-20 10:05:44,262 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:05:46,825 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:05:46,825 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:05:46,867 - server - INFO - FastAPI server started successfully
+2025-12-20 10:05:46,886 - server - INFO - Client client_1ut88a0gv_1766204918843 connected
+2025-12-20 10:06:34,894 - server - INFO - Client client_1ut88a0gv_1766204918843 disconnected
+2025-12-20 10:06:41,394 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:06:44,093 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:06:44,093 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:06:44,138 - server - INFO - FastAPI server started successfully
+2025-12-20 10:06:44,147 - server - INFO - Client client_1ut88a0gv_1766204918843 connected
+2025-12-20 10:06:51,130 - server - INFO - Client client_1ut88a0gv_1766204918843 disconnected
+2025-12-20 10:06:53,391 - server - INFO - Client client_tz7fbt25g_1766205413078 connected
+2025-12-20 10:06:58,150 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 10:06:59,945 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:07:01,674 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:07:44,139 - server - INFO - Sending message to agent: when to start investing?
+2025-12-20 10:07:46,157 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:07:47,558 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:09:36,563 - server - INFO - Client client_tz7fbt25g_1766205413078 disconnected
+2025-12-20 10:09:43,741 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:09:46,230 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:09:46,230 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:09:46,280 - server - INFO - FastAPI server started successfully
+2025-12-20 10:09:46,296 - server - INFO - Client client_tz7fbt25g_1766205413078 connected
+2025-12-20 10:10:40,447 - server - INFO - Client client_tz7fbt25g_1766205413078 disconnected
+2025-12-20 10:10:46,898 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:10:49,222 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:10:49,222 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:10:49,271 - server - INFO - FastAPI server started successfully
+2025-12-20 10:10:49,286 - server - INFO - Client client_tz7fbt25g_1766205413078 connected
+2025-12-20 10:13:11,109 - server - INFO - Client client_tz7fbt25g_1766205413078 disconnected
+2025-12-20 10:13:20,474 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:13:26,852 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:13:26,854 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:13:26,909 - server - INFO - FastAPI server started successfully
+2025-12-20 10:13:26,998 - server - INFO - Client client_tz7fbt25g_1766205413078 connected
+2025-12-20 10:13:27,007 - server - ERROR - WebSocket error for client client_tz7fbt25g_1766205413078: WebSocket is not connected. Need to call "accept" first.
+2025-12-20 10:13:27,012 - server - INFO - Client client_tz7fbt25g_1766205413078 disconnected
+2025-12-20 10:13:27,430 - server - INFO - Client client_hvro4rm42_1766205807097 connected
+2025-12-20 10:13:53,242 - server - INFO - Sending message to agent: when to start investing
+2025-12-20 10:13:55,105 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:13:55,138 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-20 10:13:55,752 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 10:13:57,190 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:14:33,392 - server - INFO - Sending message to agent: Where to Invest
+2025-12-20 10:14:35,267 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:14:35,284 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-20 10:14:35,913 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 10:14:37,227 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:15:07,965 - server - INFO - Sending message to agent: Types of investors?
+2025-12-20 10:15:09,830 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:15:09,844 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-20 10:15:10,461 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 10:15:13,191 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:24:33,470 - server - INFO - Sending message to agent: Why Companies need to issue shares to Public
+2025-12-20 10:24:35,124 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:24:35,135 - MongoDB_RAG_Model - INFO - Retriever created successfully
+2025-12-20 10:24:35,703 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 10:24:38,323 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 10:29:27,095 - server - INFO - Client client_hvro4rm42_1766205807097 disconnected
+2025-12-20 10:29:54,478 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 10:29:57,339 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 10:29:57,340 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 10:29:57,400 - server - INFO - FastAPI server started successfully
+2025-12-20 10:30:10,826 - server - INFO - Client client_hvro4rm42_1766205807097 connected
+2025-12-20 10:47:58,486 - server - INFO - Client client_hvro4rm42_1766205807097 disconnected
+2025-12-20 11:42:15,713 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 11:42:18,988 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 11:42:18,988 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 11:42:19,039 - server - INFO - FastAPI server started successfully
+2025-12-20 11:42:19,627 - server - INFO - Client client_ywlenhoby_1766211139303 connected
+2025-12-20 11:42:24,231 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 11:42:25,937 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 11:42:27,677 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 11:42:50,307 - server - INFO - Client client_ywlenhoby_1766211139303 disconnected
+2025-12-20 11:43:41,985 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 11:43:44,032 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 11:43:44,034 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 11:43:44,088 - server - INFO - FastAPI server started successfully
+2025-12-20 11:43:44,320 - server - INFO - Client client_ywlenhoby_1766211139303 connected
+2025-12-20 11:43:50,831 - server - INFO - Client client_ywlenhoby_1766211139303 disconnected
+2025-12-20 11:43:51,532 - server - INFO - Client client_ymihjq723_1766211231222 connected
+2025-12-20 11:43:54,130 - server - INFO - Client client_ymihjq723_1766211231222 disconnected
+2025-12-20 11:43:54,534 - server - INFO - Client client_2ulyzamkx_1766211234209 connected
+2025-12-20 11:44:10,753 - server - INFO - Sending message to agent: when to start investing
+2025-12-20 11:44:12,986 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 11:44:15,054 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 11:46:09,607 - server - INFO - Client client_2ulyzamkx_1766211234209 disconnected
+2025-12-20 11:46:19,184 - MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 11:46:21,747 - MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 11:46:21,747 - MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 11:46:21,804 - server - INFO - FastAPI server started successfully
+2025-12-20 11:46:21,825 - server - INFO - Client client_2ulyzamkx_1766211234209 connected
+2025-12-20 11:46:21,831 - server - INFO - Client client_2ulyzamkx_1766211234209 connected
+2025-12-20 11:46:21,833 - server - ERROR - WebSocket error for client client_2ulyzamkx_1766211234209: WebSocket is not connected. Need to call "accept" first.
+2025-12-20 11:46:21,833 - server - INFO - Client client_2ulyzamkx_1766211234209 disconnected
+2025-12-20 11:46:21,927 - server - INFO - Client client_2ulyzamkx_1766211234209 disconnected
+2025-12-20 11:46:22,365 - server - INFO - Client client_cit9sllf2_1766211382044 connected
+2025-12-20 11:46:29,018 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 11:46:30,255 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:46:30,255 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 1.063385690867631 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 30.044539971s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '30s'}]}}.
+2025-12-20 11:46:31,795 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:46:31,804 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 2.883569061324083 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 28.441196011s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '28s'}]}}.
+2025-12-20 11:46:35,122 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:46:35,122 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 4.097631911130976 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 25.093026924s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '25s'}]}}.
+2025-12-20 11:46:39,685 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:46:39,687 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 8.26199824538009 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 20.534933626s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '20s'}]}}.
+2025-12-20 11:46:48,655 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:46:48,657 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 16.02176139659806 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 11.687803635s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '11s'}]}}.
+2025-12-20 11:47:05,572 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:22,749 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 11:48:23,689 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:23,696 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 1.6830754296816788 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 36.564971045s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '36s'}]}}.
+2025-12-20 11:48:25,792 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:25,793 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 2.2121934322984966 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 34.411095368s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '34s'}]}}.
+2025-12-20 11:48:28,496 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:28,499 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 4.5711894099400485 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 31.797122662s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '31s'}]}}.
+2025-12-20 11:48:33,496 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:33,499 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 8.423242248974109 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 26.743159723s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '26s'}]}}.
+2025-12-20 11:48:42,580 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:42,583 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 16.627440738314814 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 17.635649447s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '17s'}]}}.
+2025-12-20 11:48:59,868 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 11:48:59,875 - server - INFO - Client client_cit9sllf2_1766211382044 disconnected
+2025-12-20 11:57:58,363 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 11:58:00,455 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 11:58:00,455 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 11:58:00,513 - server - INFO - FastAPI server started successfully
+2025-12-20 11:58:03,390 - server - INFO - Client client_owfqmidex_1766212083047 connected
+2025-12-20 11:58:07,053 - server - INFO - Sending message to agent: hi
+2025-12-20 11:58:07,505 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:15,499 - server - INFO - Sending message to agent: good morning
+2025-12-20 11:58:15,872 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:30,477 - server - INFO - Sending message to agent: Tell me about the stock market
+2025-12-20 11:58:30,891 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:31,123 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:31,457 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:54,777 - server - INFO - Sending message to agent: when to invest?
+2025-12-20 11:58:55,210 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:55,527 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 11:58:55,876 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:00:43,524 - server - INFO - Client client_owfqmidex_1766212083047 disconnected
+2025-12-20 12:00:53,144 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 12:00:55,591 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 12:00:55,592 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 12:00:55,645 - server - INFO - FastAPI server started successfully
+2025-12-20 12:00:55,658 - server - INFO - Client client_owfqmidex_1766212083047 connected
+2025-12-20 12:01:17,516 - server - INFO - Sending message to agent: when to invest
+2025-12-20 12:01:18,089 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:18,569 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:19,046 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:19,529 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:20,070 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:20,278 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:01:20,811 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 12:03:52,533 - server - INFO - Client client_owfqmidex_1766212083047 disconnected
+2025-12-20 12:04:01,127 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 12:04:03,133 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 12:04:03,135 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 12:04:03,177 - server - INFO - FastAPI server started successfully
+2025-12-20 12:04:03,184 - server - INFO - Client client_owfqmidex_1766212083047 connected
+2025-12-20 12:05:27,464 - server - INFO - Client client_owfqmidex_1766212083047 disconnected
+2025-12-20 12:05:35,499 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 12:05:37,735 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 12:05:37,738 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 12:05:37,782 - server - INFO - FastAPI server started successfully
+2025-12-20 12:05:37,792 - server - INFO - Client client_owfqmidex_1766212083047 connected
+2025-12-20 12:05:39,993 - server - INFO - Client client_owfqmidex_1766212083047 disconnected
+2025-12-20 12:05:46,826 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 12:05:49,094 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 12:05:49,096 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 12:05:49,141 - server - INFO - FastAPI server started successfully
+2025-12-20 14:49:19,810 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 14:49:25,193 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 14:49:25,193 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 14:49:25,252 - server - INFO - FastAPI server started successfully
+2025-12-20 14:49:54,694 - server - INFO - Client client_ddicg976c_1766222394346 connected
+2025-12-20 14:50:04,779 - server - INFO - Sending message to agent: when to start invest?
+2025-12-20 14:50:05,409 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2025-12-20 14:50:56,087 - server - INFO - Client client_ddicg976c_1766222394346 disconnected
+2025-12-20 14:50:56,850 - server - INFO - Client client_qlk2j7pbk_1766222456527 connected
+2025-12-20 14:51:01,878 - server - INFO - Sending message to agent: hi
+2025-12-20 14:51:02,311 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 14:51:14,896 - server - INFO - Sending message to agent: what can you do?
+2025-12-20 14:51:15,556 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 14:51:37,598 - server - INFO - Sending message to agent: what is the weather in bangalore
+2025-12-20 14:51:38,775 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 14:51:39,570 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-12-20 14:51:56,416 - server - INFO - Sending message to agent: what is the wether
+2025-12-20 14:51:57,125 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2025-12-20 14:54:10,120 - server - INFO - Client client_qlk2j7pbk_1766222456527 disconnected
+2025-12-20 14:54:51,015 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 14:54:55,847 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 14:54:55,850 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 14:54:55,923 - server - INFO - FastAPI server started successfully
+2025-12-20 14:54:55,961 - server - INFO - Client client_qlk2j7pbk_1766222456527 connected
+2025-12-20 14:54:55,968 - server - ERROR - WebSocket error for client client_qlk2j7pbk_1766222456527: WebSocket is not connected. Need to call "accept" first.
+2025-12-20 14:54:55,971 - server - INFO - Client client_qlk2j7pbk_1766222456527 disconnected
+2025-12-20 14:54:55,972 - server - INFO - Client client_qlk2j7pbk_1766222456527 connected
+2025-12-20 14:54:55,986 - server - INFO - Client client_qlk2j7pbk_1766222456527 disconnected
+2025-12-20 14:54:56,372 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 14:55:05,046 - server - INFO - Sending message to agent: hi
+2025-12-20 14:55:06,643 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:55:11,426 - server - INFO - Sending message to agent: when to start invest?
+2025-12-20 14:55:12,841 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:55:14,121 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 14:55:16,338 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:55:38,751 - server - INFO - Sending message to agent: where to invest?
+2025-12-20 14:55:40,360 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:55:41,016 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:batchEmbedContents "HTTP/1.1 200 OK"
+2025-12-20 14:55:43,238 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:56:00,187 - server - INFO - Sending message to agent: what is the weather in bangalore
+2025-12-20 14:56:01,638 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:56:02,156 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 14:56:02,165 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 1.5112820079417248 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 57.932336549s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '57s'}]}}.
+2025-12-20 14:56:04,203 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2025-12-20 14:56:04,206 - google_genai._api_client - INFO - Retrying google.genai._api_client.BaseApiClient._request_once in 2.195483643148176 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\nPlease retry in 55.985605532s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '55s'}]}}.
+2025-12-20 14:56:07,472 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 14:56:32,617 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 14:57:18,785 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 14:57:20,962 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 14:57:20,962 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 14:57:21,027 - server - INFO - FastAPI server started successfully
+2025-12-20 14:57:21,038 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 14:57:23,946 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 14:57:34,834 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 14:57:36,957 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 14:57:36,957 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 14:57:36,992 - server - INFO - FastAPI server started successfully
+2025-12-20 14:57:46,037 - temp.MongoDB_RAG_Model - INFO - Initializing MongoDB connection...
+2025-12-20 14:57:48,459 - temp.MongoDB_RAG_Model - INFO - MongoDB connection successful
+2025-12-20 14:57:48,459 - temp.MongoDB_RAG_Model - INFO - MongoDB vector store initialized
+2025-12-20 14:57:48,492 - server - INFO - FastAPI server started successfully
+2025-12-20 14:57:48,509 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 14:58:21,405 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 14:58:32,351 - server - INFO - FastAPI server started successfully
+2025-12-20 14:58:32,351 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 15:00:52,534 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 15:01:03,404 - server - INFO - FastAPI server started successfully
+2025-12-20 15:01:03,412 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 15:01:39,564 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 15:03:47,727 - server - INFO - FastAPI server started successfully
+2025-12-20 15:03:47,732 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 15:03:52,928 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 15:04:02,289 - server - INFO - FastAPI server started successfully
+2025-12-20 15:04:02,299 - server - INFO - Client client_wa3py7rwq_1766222696060 connected
+2025-12-20 15:05:26,548 - server - INFO - Client client_wa3py7rwq_1766222696060 disconnected
+2025-12-20 15:12:25,540 - server - INFO - FastAPI server started successfully
+2025-12-20 15:12:27,172 - server - INFO - Client client_ykty3biah_1766223746819 connected
+2025-12-20 15:12:30,470 - server - INFO - Sending message to agent: hi
+2025-12-20 15:12:32,185 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:12:36,256 - server - INFO - Client client_ykty3biah_1766223746819 disconnected
+2025-12-20 15:12:36,727 - server - INFO - Client client_qo2fnvjv2_1766223756398 connected
+2025-12-20 15:12:41,634 - server - INFO - Client client_qo2fnvjv2_1766223756398 disconnected
+2025-12-20 15:12:42,071 - server - INFO - Client client_hreps7f62_1766223761740 connected
+2025-12-20 15:15:40,704 - server - INFO - Client client_hreps7f62_1766223761740 disconnected
+2025-12-20 15:15:41,442 - server - INFO - Client client_526m9r6an_1766223941116 connected
+2025-12-20 15:15:44,138 - server - INFO - Sending message to agent: hi
+2025-12-20 15:15:46,060 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:15:49,017 - server - INFO - Sending message to agent: good
+2025-12-20 15:15:50,332 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:15:54,185 - server - INFO - Client client_526m9r6an_1766223941116 disconnected
+2025-12-20 15:15:57,632 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:20:00,509 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:20:10,991 - server - INFO - FastAPI server started successfully
+2025-12-20 15:20:10,997 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:20:45,976 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:20:55,939 - server - INFO - FastAPI server started successfully
+2025-12-20 15:20:55,953 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:21:06,337 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:21:16,412 - server - INFO - FastAPI server started successfully
+2025-12-20 15:21:16,420 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:21:22,489 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:21:33,581 - server - INFO - FastAPI server started successfully
+2025-12-20 15:21:44,512 - server - INFO - FastAPI server started successfully
+2025-12-20 15:21:44,518 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:21:47,559 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:21:59,141 - server - INFO - FastAPI server started successfully
+2025-12-20 15:22:10,138 - server - INFO - FastAPI server started successfully
+2025-12-20 15:22:10,146 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:23:36,435 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:24:02,943 - server - INFO - FastAPI server started successfully
+2025-12-20 15:24:04,212 - server - INFO - Client client_hb1l3lz3d_1766224443769 connected
+2025-12-20 15:24:07,638 - server - INFO - Sending message to agent: hi
+2025-12-20 15:24:09,468 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:24:15,202 - server - INFO - Sending message to agent: What's the weather in New York?
+2025-12-20 15:24:16,822 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:24:18,660 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-12-20 15:24:18,684 - server - INFO - Client client_4wydzk68i_1766223957304 connected
+2025-12-20 15:24:43,302 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
+2025-12-20 15:25:36,371 - server - INFO - Client client_hb1l3lz3d_1766224443769 disconnected
