@@ -2,9 +2,9 @@ import streamlit as st
 import os
 from Langgraph_Agent import ConversationManager
 
-st.set_page_config(page_title="AI Agent Assignment", layout="wide")
+st.set_page_config(page_title="Agentic AI Demo", layout="wide")
 
-st.title("🤖 LangGraph Agent: Weather & RAG (Google Gemini)")
+st.title("🚀 Agentic AI Demo: Weather & RAG (Google Gemini)")
 
 
 # API Key Check

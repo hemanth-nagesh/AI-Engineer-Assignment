@@ -1,5 +1,6 @@
 import os
 import requests
+import logging
 from typing import Annotated, Literal, Optional
 from typing_extensions import TypedDict
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
@@ -12,10 +13,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 # --- Configuration ---
 openweathermap_api_key = os.getenv("OPENWEATHERMAP_API_KEY")
 gemini_api_key = os.getenv("GOOGLE_API_KEY")
-langsmith_api_key = os.getenv("LANGCHAIN_API_KEY")
 mongodb_url = os.getenv("MONGODB_URL")
 use_mongodb = bool(mongodb_url)  # Use MongoDB if URL is provided
 
@@ -36,6 +40,8 @@ def get_weather(city: str):
     Args:
         city: The name of the city (e.g., 'London', 'New York').
     """
+    logger.info(f"🌤️ Called weather model for {city}")
+    
     api_key = openweathermap_api_key
     if not api_key:
         return "Error: OpenWeatherMap API key not found."
@@ -54,7 +60,10 @@ def get_weather(city: str):
         if response.status_code == 200:
             weather_desc = data["weather"][0]["description"]
             temp = data["main"]["temp"]
-            return f"The weather in {city} is currently {weather_desc} with a temperature of {temp}°C."
+            humidity = data["main"]["humidity"]
+            wind_speed = data["wind"]["speed"]
+            result = f"The weather in {city} is currently {weather_desc} with a temperature of {temp}°C, humidity of {humidity}%, and wind speed of {wind_speed} m/s."
+            return result
         else:
             return f"Error fetching weather: {data.get('message', 'Unknown error')}"
     except Exception as e:
@@ -62,14 +71,13 @@ def get_weather(city: str):
 
 
 def retrieve_knowledge(query: str):
-    """ get knowledge retrieval tool for stock market related questions 
+    """ get knowledge retrieval tool for stock market related questions
     arg: query string
     return: retrieved text from knowledge base
     """
+    logger.info(f"📚 Called RAG model")
     try:
-        print("Retrieving knowledge from MongoDB...")
         result = get_mongodb_retriever(query)
-        print(f"Retrieved result: {result}")
         if not result:
             return "No relevant information found in the knowledge base."
         return result
@@ -119,6 +127,12 @@ def agent_node(state: AgentState):
     
     try:
         response = llm_with_tools.invoke(prompt_messages)
+        
+        # Check if model decided to use tools
+        if hasattr(response, 'tool_calls') and response.tool_calls:
+            tool_names = [tool.get('name', 'unknown') for tool in response.tool_calls]
+            logger.info(f"🔧 Agent invoked: {', '.join(tool_names)}")
+        
         return {"messages": [response]}
     except Exception as e:
         error_msg = AIMessage(content=f"I encountered an error: {str(e)}")
@@ -136,6 +150,7 @@ def should_continue(state: AgentState) -> Literal["tools", "__end__"]:
     
     if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
         return "tools"
+    
     return "__end__"
 
 # --- Graph Construction ---
@@ -179,13 +194,12 @@ def extract_text_from_response(content):
         return str(content)
 
 # --- Main query processing ---
-def process_query(user_input: str, project_name: str = "langgraph-agent"):
+def process_query(user_input: str):
     """
     Process a single user query through the agent graph.
     
     Args:
         user_input: The user's question or request
-        project_name: LangSmith project name for organizing traces
         
     Returns:
         The final response text from the agent
@@ -198,7 +212,6 @@ def process_query(user_input: str, project_name: str = "langgraph-agent"):
         inputs = {"messages": [HumanMessage(content=user_input)]}
         final_response = ""
         
-        # Add run configuration for LangSmith
         config = {}
         
         for event in app.stream(inputs, config=config):
@@ -217,12 +230,11 @@ def process_query(user_input: str, project_name: str = "langgraph-agent"):
 
 # --- Conversation Manager ---
 class ConversationManager:
-    """Helper class to manage multi-turn conversations with LangSmith tracing."""
+    """Helper class to manage multi-turn conversations."""
     
-    def __init__(self, thread_id: str = "default", project_name: str = "langgraph-agent"):
+    def __init__(self, thread_id: str = "default"):
         self.thread_id = thread_id
         self.messages = []
-        self.project_name = project_name
     
     def send_message(self, user_input: str):
         """Send a message and get response while maintaining history."""
@@ -235,7 +247,6 @@ class ConversationManager:
             inputs = {"messages": self.messages.copy()}
             final_response = ""
             
-            # Add run configuration
             config = {}
             
             for event in app.stream(inputs, config=config):
@@ -329,8 +340,10 @@ def evaluate_response_quality(run_input: str, run_output: str, expected_keywords
     else:
         value = "POOR"
     
-    return {
+    result = {
         "score": min(max(score, 0.0), 1.0),  # Clamp between 0 and 1
         "value": value,
         "comment": "; ".join(feedback)
     }
+    
+    return result

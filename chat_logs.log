@@ -404,3 +404,8 @@
 2025-12-20 15:24:18,684 - server - INFO - Client client_4wydzk68i_1766223957304 connected
 2025-12-20 15:24:43,302 - server - INFO - Client client_4wydzk68i_1766223957304 disconnected
 2025-12-20 15:25:36,371 - server - INFO - Client client_hb1l3lz3d_1766224443769 disconnected
+2025-12-20 18:33:23,110 - server - INFO - FastAPI server started successfully
+2025-12-20 18:34:00,291 - server - INFO - Client client_dqvu0porw_1766235839766 connected
+2025-12-20 18:34:07,203 - server - INFO - Sending message to agent: HI THERE
+2025-12-20 18:34:07,658 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 403 Forbidden"
+2025-12-20 18:43:52,263 - server - INFO - Client client_dqvu0porw_1766235839766 disconnected

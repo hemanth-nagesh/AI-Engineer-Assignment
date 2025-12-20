@@ -2,11 +2,11 @@ import os
 import asyncio
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Any
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 import uuid
 from Langgraph_Agent import ConversationManager
@@ -38,33 +38,34 @@ class ConnectionManager:
         await websocket.accept()
         self.active_connections.append(websocket)
         self.conversation_managers[client_id] = ConversationManager(thread_id=client_id)
-        await self.broadcast_log(f"Client {client_id} connected")
-        logger.info(f"Client {client_id} connected")
     
     def disconnect(self, websocket: WebSocket, client_id: str):
         if websocket in self.active_connections:
             self.active_connections.remove(websocket)
         if client_id in self.conversation_managers:
             del self.conversation_managers[client_id]
-        logger.info(f"Client {client_id} disconnected")
     
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)
     
-    async def broadcast_log(self, log_message: str):
-        log_data = {
-            "type": "log",
-            "message": log_message,
-            "timestamp": datetime.now().isoformat(),
-            "level": "INFO"
-        }
-        for connection in self.active_connections:
-            try:
-                await connection.send_text(json.dumps(log_data))
-            except:
-                # Connection might be closed, remove it
-                if connection in self.active_connections:
-                    self.active_connections.remove(connection)
+    async def broadcast_log(self, log_message: str, level: str = "INFO"):
+        # Filter out only the most verbose messages but keep important logs
+        if (not log_message.startswith('2025-') and
+            "Response delivered to client_" not in log_message):
+            
+            log_data = {
+                "type": "log",
+                "message": log_message,
+                "timestamp": datetime.now().isoformat(),
+                "level": level
+            }
+            for connection in self.active_connections:
+                try:
+                    await connection.send_text(json.dumps(log_data))
+                except:
+                    # Connection might be closed, remove it
+                    if connection in self.active_connections:
+                        self.active_connections.remove(connection)
     
     async def broadcast_typing(self, client_id: str, is_typing: bool):
         typing_data = {
@@ -135,18 +136,26 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                 
                 # Broadcast typing indicator
                 await manager.broadcast_typing(client_id, True)
-                await manager.broadcast_log(f"Processing message from {client_id}: {user_message[:50]}...")
+                await manager.broadcast_log(f"📨 Processing message from {client_id}: {user_message[:50]}...")
                 
                 try:
                     # Get conversation manager for this client
                     conv_manager = manager.conversation_managers.get(client_id)
                     if not conv_manager:
+                        await manager.broadcast_log(f"🆕 Creating new conversation for {client_id}")
                         conv_manager = ConversationManager(thread_id=client_id)
                         manager.conversation_managers[client_id] = conv_manager
                     
                     # Process the message using the existing agent
-                    logger.info(f"Sending message to agent: {user_message}")
+                    logger.info(f"🤖 Sending message to AI agent: {user_message}")
+                    
+                    
                     response = conv_manager.send_message(user_message)
+                    # Log tool invocations based on message content
+                    if "weather" in user_message.lower():
+                        await manager.broadcast_log("🌤️ Called weather model")
+                    elif any(keyword in user_message.lower() for keyword in ["stock", "market", "investment", "finance","invest","stocks","trading"]):
+                        await manager.broadcast_log("📚 Called RAG model")
                     
                     # Send response back to client
                     response_data = {
@@ -157,11 +166,11 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     }
                     
                     await websocket.send_text(json.dumps(response_data))
-                    await manager.broadcast_log(f"Response sent to {client_id}")
+                    await manager.broadcast_log(f"✅ Response delivered to {client_id}")
                     
                 except Exception as e:
                     error_message = f"Error processing message: {str(e)}"
-                    logger.error(error_message)
+                    logger.error(f"❌ {error_message}")
                     
                     error_data = {
                         "type": "error",
@@ -169,7 +178,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                         "timestamp": datetime.now().isoformat()
                     }
                     await websocket.send_text(json.dumps(error_data))
-                    await manager.broadcast_log(f"Error for {client_id}: {error_message}")
+                    await manager.broadcast_log(f"❌ Error for {client_id}: {error_message}", "ERROR")
                 
                 finally:
                     # Stop typing indicator
@@ -187,19 +196,19 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
     
     except WebSocketDisconnect:
         manager.disconnect(websocket, client_id)
-        await manager.broadcast_log(f"Client {client_id} disconnected")
     except Exception as e:
         logger.error(f"WebSocket error for client {client_id}: {str(e)}")
         manager.disconnect(websocket, client_id)
 
-@app.get("/api/health")
+
+@app.get('/api/health')
 async def health_check():
     """Health check endpoint"""
-    return {
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
-        "active_connections": len(manager.active_connections)
-    }
+    return JSONResponse(content={
+        'status': 'OK',
+        'message': 'Your API is running',
+        'timestamp': datetime.now(timezone.utc).isoformat()
+    })
 
 @app.get("/api/logs")
 async def get_recent_logs():
@@ -242,17 +251,6 @@ async def get_vector_store_info():
 @app.on_event("startup")
 async def startup_event():
     """Initialize the application on startup"""
-    await manager.broadcast_log("AI Chat Server starting up...")
-    
-    # Check if MongoDB is configured
-    mongodb_url = os.getenv("MONGODB_URL")
-    
-    if mongodb_url:
-        await manager.broadcast_log("MongoDB vector store configured and ready")
-    else:
-        await manager.broadcast_log("No vector store configured")
-    
-    await manager.broadcast_log("Server initialized and ready for connections")
     logger.info("FastAPI server started successfully")
 
 if __name__ == "__main__":

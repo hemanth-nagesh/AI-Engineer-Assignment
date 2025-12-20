@@ -11,8 +11,7 @@ load_dotenv()
 genai_client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 # Connect to your MongoDB deployment
 DB_URL = os.getenv("MONGODB_URL")
-import certifi
-mongo_client = MongoClient(DB_URL,tlsCAFile=certifi.where())
+mongo_client = MongoClient(DB_URL)
 collection = mongo_client["sample_mflix"]["ragpdf"]
 
 def get_embedding(text):
