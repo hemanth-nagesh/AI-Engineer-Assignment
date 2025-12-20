@@ -14,7 +14,7 @@ langchain-mongodb
 langchain
 langchain-community
 langchain-core
-langchain-google-generativeai
+langchain-google-genai
 langgraph
 google-generativeai
 python-dotenv
