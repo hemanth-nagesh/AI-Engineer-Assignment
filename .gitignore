@@ -1,6 +1,5 @@
 ai_env/
 .venv/
-.env
+.env/
 temp/
 qdrant_db/
-MongoDB_RAG_Model.py
