@@ -22,13 +22,7 @@ class ChatApp {
         this.startConnectionTimer();
         this.initializeAnimations();
         
-        // Fallback: hide loading overlay after 10 seconds regardless of connection status
-        setTimeout(() => {
-            if (this.loadingOverlay && !this.loadingOverlay.classList.contains('hidden')) {
-                this.showLoading(false);
-                this.addLog('⚠️ Loading timeout - continuing anyway', 'WARNING');
-            }
-        }, 10000);
+        // Loading overlay removed - no timeout needed
     }
 
     generateClientId() {
@@ -60,7 +54,7 @@ class ChatApp {
         // Connection elements
         this.statusIndicator = document.getElementById('status-indicator');
         this.statusText = document.getElementById('status-text');
-        this.loadingOverlay = document.getElementById('loading-overlay');
+        // Loading overlay removed
         
         // Chat elements
         this.chatMessages = document.getElementById('chat-messages');
@@ -137,7 +131,7 @@ class ChatApp {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsUrl = `${protocol}//${window.location.host}/ws/${this.clientId}`;
         
-        this.showLoading(true);
+        // Removed loading overlay - start without it
         
         try {
             this.ws = new WebSocket(wsUrl);
@@ -149,7 +143,6 @@ class ChatApp {
             
         } catch (error) {
             this.showError('Failed to connect to Agentic AI Demo server');
-            this.showLoading(false);
             this.addLog('❌ Connection failed: ' + error.message, 'ERROR');
         }
     }
@@ -160,7 +153,6 @@ class ChatApp {
         this.connectionStartTime = Date.now();
         
         this.updateConnectionStatus(true);
-        this.showLoading(false);
         this.addLog('✅ Connected to Agentic AI Demo', 'SUCCESS');
         
         // Start ping interval for connection health
@@ -243,7 +235,6 @@ class ChatApp {
     onConnectionError(error) {
         this.addLog(`WebSocket error: ${error.message || 'Unknown error'}`, 'ERROR');
         this.updateConnectionStatus(false);
-        this.showLoading(false); // Ensure loading overlay is hidden on error
     }
 
     sendMessage() {
@@ -483,13 +474,7 @@ class ChatApp {
         }, logs.length * 20 + 200);
     }
 
-    showLoading(show) {
-        if (show) {
-            this.loadingOverlay.classList.remove('hidden');
-        } else {
-            this.loadingOverlay.classList.add('hidden');
-        }
-    }
+    // showLoading function removed - no longer needed
 
     showError(message) {
         this.errorMessage.textContent = message;
