@@ -21,6 +21,14 @@ class ChatApp {
         this.connect();
         this.startConnectionTimer();
         this.initializeAnimations();
+        
+        // Fallback: hide loading overlay after 10 seconds regardless of connection status
+        setTimeout(() => {
+            if (this.loadingOverlay && !this.loadingOverlay.classList.contains('hidden')) {
+                this.showLoading(false);
+                this.addLog('⚠️ Loading timeout - continuing anyway', 'WARNING');
+            }
+        }, 10000);
     }
 
     generateClientId() {
@@ -142,6 +150,7 @@ class ChatApp {
         } catch (error) {
             this.showError('Failed to connect to Agentic AI Demo server');
             this.showLoading(false);
+            this.addLog('❌ Connection failed: ' + error.message, 'ERROR');
         }
     }
 
@@ -234,6 +243,7 @@ class ChatApp {
     onConnectionError(error) {
         this.addLog(`WebSocket error: ${error.message || 'Unknown error'}`, 'ERROR');
         this.updateConnectionStatus(false);
+        this.showLoading(false); // Ensure loading overlay is hidden on error
     }
 
     sendMessage() {
