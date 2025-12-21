@@ -21,8 +21,6 @@ class ChatApp {
         this.connect();
         this.startConnectionTimer();
         this.initializeAnimations();
-        
-        // Loading overlay removed - no timeout needed
     }
 
     generateClientId() {
@@ -54,7 +52,7 @@ class ChatApp {
         // Connection elements
         this.statusIndicator = document.getElementById('status-indicator');
         this.statusText = document.getElementById('status-text');
-        // Loading overlay removed
+        this.loadingOverlay = document.getElementById('loading-overlay');
         
         // Chat elements
         this.chatMessages = document.getElementById('chat-messages');
@@ -131,7 +129,7 @@ class ChatApp {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsUrl = `${protocol}//${window.location.host}/ws/${this.clientId}`;
         
-        // Removed loading overlay - start without it
+        this.showLoading(true);
         
         try {
             this.ws = new WebSocket(wsUrl);
@@ -143,7 +141,7 @@ class ChatApp {
             
         } catch (error) {
             this.showError('Failed to connect to Agentic AI Demo server');
-            this.addLog('❌ Connection failed: ' + error.message, 'ERROR');
+            this.showLoading(false);
         }
     }
 
@@ -153,6 +151,7 @@ class ChatApp {
         this.connectionStartTime = Date.now();
         
         this.updateConnectionStatus(true);
+        this.showLoading(false);
         this.addLog('✅ Connected to Agentic AI Demo', 'SUCCESS');
         
         // Start ping interval for connection health
@@ -449,7 +448,17 @@ class ChatApp {
         }, messages.length * 50 + 300);
     }
 
-    // Removed toggleLogs functionality - logs section now always visible
+    toggleLogs() {
+        const logsSection = document.querySelector('.logs-section');
+        logsSection.classList.toggle('hidden');
+        
+        const icon = this.toggleLogsBtn.querySelector('i');
+        if (logsSection.classList.contains('hidden')) {
+            icon.className = 'fas fa-eye-slash';
+        } else {
+            icon.className = 'fas fa-eye';
+        }
+    }
 
     clearLogs() {
         // Add fade out animation
@@ -474,7 +483,13 @@ class ChatApp {
         }, logs.length * 20 + 200);
     }
 
-    // showLoading function removed - no longer needed
+    showLoading(show) {
+        if (show) {
+            this.loadingOverlay.classList.remove('hidden');
+        } else {
+            this.loadingOverlay.classList.add('hidden');
+        }
+    }
 
     showError(message) {
         this.errorMessage.textContent = message;
@@ -633,7 +648,7 @@ class ChatApp {
             if (index < text.length) {
                 element.textContent += text[index];
                 index++;
-                setTimeout(typeChar, 20); // Adjust typing speed here
+                setTimeout(typeChar, 10); // Adjust typing speed here
             }
         };
         

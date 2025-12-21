@@ -149,14 +149,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     # Process the message using the existing agent
                     logger.info(f"🤖 Sending message to AI agent: {user_message}")
                     
-                    
-                    response = conv_manager.send_message(user_message)
                     # Log tool invocations based on message content
                     if "weather" in user_message.lower():
                         await manager.broadcast_log("🌤️ Called weather model")
-                    elif any(keyword in user_message.lower() for keyword in ["stock", "market", "investment", "finance","invest","stocks","trading"]):
+                    elif any(keyword in user_message.lower() for keyword in ["stock", "market", "investment", "finance"]):
                         await manager.broadcast_log("📚 Called RAG model")
                     
+                    response = conv_manager.send_message(user_message)
+                    #
                     # Send response back to client
                     response_data = {
                         "type": "response",
