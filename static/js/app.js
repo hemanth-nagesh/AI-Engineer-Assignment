@@ -1,3 +1,4 @@
+// Enhanced ChatApp class with improved browser-side caching
 class ChatApp {
     constructor() {
         this.ws = null;
@@ -15,23 +16,33 @@ class ChatApp {
             'SUCCESS': { color: '#10b981', icon: 'fa-check-circle' }
         };
         
+        // Enhanced caching properties
+        this.messageCache = [];
+        this.cacheKey = 'agenticAI_chatMessages';
+        this.metadataKey = 'agenticAI_metadata';
+        this.maxCacheSize = 500; // Maximum messages to cache
+        
         this.initializeElements();
         this.bindEvents();
-        this.loadCachedMessages();
+        this.loadCachedData();
         this.connect();
         this.startConnectionTimer();
         this.initializeAnimations();
+        this.startAutoSave();
     }
 
     generateClientId() {
-        return 'client_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        // Check if we have a persistent client ID
+        let clientId = localStorage.getItem('agenticAI_clientId');
+        if (!clientId) {
+            clientId = 'client_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+            localStorage.setItem('agenticAI_clientId', clientId);
+        }
+        return clientId;
     }
 
     initializeAnimations() {
-        // Add smooth scroll behavior
         document.documentElement.style.scrollBehavior = 'smooth';
-        
-        // Add entrance animations
         this.addEntranceAnimations();
     }
 
@@ -64,7 +75,7 @@ class ChatApp {
         
         // Logs elements
         this.logsContainer = document.getElementById('logs-container');
-        this.toggleLogsBtn = document.getElementById('toggle-logs');
+        // this.toggleLogsBtn = document.getElementById('toggle-logs');
         this.clearLogsBtn = document.getElementById('clear-logs');
         
         // Footer elements
@@ -93,7 +104,7 @@ class ChatApp {
         this.clearChatBtn.addEventListener('click', () => this.clearChat());
         
         // Logs events
-        this.toggleLogsBtn.addEventListener('click', () => this.toggleLogs());
+        // this.toggleLogsBtn.addEventListener('click', () => this.toggleLogs());
         this.clearLogsBtn.addEventListener('click', () => this.clearLogs());
         
         // Quick action events
@@ -119,15 +130,182 @@ class ChatApp {
         
         // Window events
         window.addEventListener('beforeunload', () => {
+            this.saveCacheToStorage();
             if (this.ws) {
                 this.ws.close();
             }
         });
+
+        // Save on visibility change (tab switch)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.saveCacheToStorage();
+            }
+        });
     }
+
+    // ==================== ENHANCED CACHING SYSTEM ====================
+    
+    startAutoSave() {
+        // Auto-save every 10 seconds
+        this.autoSaveInterval = setInterval(() => {
+            this.saveCacheToStorage();
+        }, 10000);
+    }
+
+    loadCachedData() {
+        try {
+            console.log('📦 Loading cached data from browser storage...');
+            
+            // Load messages from cache
+            const cachedMessages = localStorage.getItem(this.cacheKey);
+            const cachedMetadata = localStorage.getItem(this.metadataKey);
+            
+            if (cachedMessages) {
+                this.messageCache = JSON.parse(cachedMessages);
+                console.log(`✅ Loaded ${this.messageCache.length} cached messages`);
+                
+                // Remove welcome message if we have cached messages
+                if (this.messageCache.length > 0) {
+                    const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
+                    if (welcomeMessage) {
+                        welcomeMessage.remove();
+                    }
+                }
+                
+                // Render cached messages to DOM
+                this.messageCache.forEach(msg => {
+                    this.addMessageToDOM(msg.content, msg.type, msg.timestamp, false);
+                });
+                
+                // Load metadata
+                if (cachedMetadata) {
+                    const metadata = JSON.parse(cachedMetadata);
+                    this.messageCount = metadata.messageCount || 0;
+                    this.updateMessageCount();
+                    console.log(`📊 Message count restored: ${this.messageCount}`);
+                }
+                
+                this.addLog(`✅ Restored ${this.messageCache.length} messages from cache`, 'SUCCESS');
+            } else {
+                console.log('ℹ️ No cached messages found');
+            }
+        } catch (error) {
+            console.error('❌ Error loading cached data:', error);
+            this.addLog('⚠️ Could not restore previous messages', 'WARNING');
+            this.messageCache = [];
+        }
+    }
+
+    saveCacheToStorage() {
+        try {
+            // Trim cache if it exceeds max size
+            if (this.messageCache.length > this.maxCacheSize) {
+                this.messageCache = this.messageCache.slice(-this.maxCacheSize);
+                console.log(`🗜️ Cache trimmed to ${this.maxCacheSize} messages`);
+            }
+            
+            // Save messages
+            localStorage.setItem(this.cacheKey, JSON.stringify(this.messageCache));
+            
+            // Save metadata
+            const metadata = {
+                messageCount: this.messageCount,
+                lastSaved: new Date().toISOString(),
+                clientId: this.clientId
+            };
+            localStorage.setItem(this.metadataKey, JSON.stringify(metadata));
+            
+            console.log(`💾 Saved ${this.messageCache.length} messages to cache`);
+        } catch (error) {
+            if (error.name === 'QuotaExceededError') {
+                console.warn('⚠️ Storage quota exceeded, clearing old messages...');
+                // Remove oldest half of messages
+                this.messageCache = this.messageCache.slice(Math.floor(this.messageCache.length / 2));
+                this.saveCacheToStorage(); // Try again
+            } else {
+                console.error('❌ Error saving cache:', error);
+            }
+        }
+    }
+
+    addToCache(content, type, timestamp) {
+        const messageObj = {
+            id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            content: content,
+            type: type,
+            timestamp: timestamp,
+            savedAt: new Date().toISOString()
+        };
+        
+        this.messageCache.push(messageObj);
+        
+        // Immediate save for important messages
+        if (type === 'assistant' || type === 'error') {
+            this.saveCacheToStorage();
+        }
+    }
+
+    clearMessageCache() {
+        try {
+            console.log('🗑️ Clearing message cache...');
+            this.messageCache = [];
+            localStorage.removeItem(this.cacheKey);
+            localStorage.removeItem(this.metadataKey);
+            console.log('✅ Message cache cleared successfully');
+            this.addLog('🗑️ Chat history cleared from storage', 'INFO');
+        } catch (error) {
+            console.error('❌ Error clearing message cache:', error);
+        }
+    }
+
+    exportChatHistory() {
+        try {
+            const exportData = {
+                clientId: this.clientId,
+                exportDate: new Date().toISOString(),
+                messageCount: this.messageCache.length,
+                messages: this.messageCache
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `agentic-ai-chat-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            this.addLog('📥 Chat history exported successfully', 'SUCCESS');
+        } catch (error) {
+            console.error('❌ Error exporting chat history:', error);
+            this.showError('Failed to export chat history');
+        }
+    }
+
+    getCacheStats() {
+        const cacheSize = new Blob([localStorage.getItem(this.cacheKey) || '']).size;
+        const cacheSizeKB = (cacheSize / 1024).toFixed(2);
+        
+        return {
+            messageCount: this.messageCache.length,
+            cacheSize: cacheSizeKB + ' KB',
+            maxSize: this.maxCacheSize,
+            utilization: ((this.messageCache.length / this.maxCacheSize) * 100).toFixed(1) + '%'
+        };
+    }
+
+    // ==================== CONNECTION MANAGEMENT ====================
 
     connect() {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${protocol}//${window.location.host}/ws/${this.clientId}`;
+        const host = window.location.host;
+        const wsUrl = `${protocol}//${host}/ws/${this.clientId}`;
+        
+        console.log('🔌 Attempting to connect to:', wsUrl);
+        this.addLog(`🔌 Connecting to: ${wsUrl}`, 'INFO');
         
         this.showLoading(true);
         
@@ -136,16 +314,19 @@ class ChatApp {
             
             this.ws.onopen = () => this.onConnectionOpen();
             this.ws.onmessage = (event) => this.onMessage(event);
-            this.ws.onclose = () => this.onConnectionClose();
+            this.ws.onclose = (event) => this.onConnectionClose(event);
             this.ws.onerror = (error) => this.onConnectionError(error);
             
         } catch (error) {
-            this.showError('Failed to connect to Agentic AI Demo server');
+            console.error('❌ WebSocket connection error:', error);
+            this.showError('Failed to connect to Agentic AI Demo server: ' + error.message);
             this.showLoading(false);
+            this.addLog('❌ Connection failed: ' + error.message, 'ERROR');
         }
     }
 
     onConnectionOpen() {
+        console.log('✅ WebSocket connected successfully');
         this.isConnected = true;
         this.reconnectAttempts = 0;
         this.connectionStartTime = Date.now();
@@ -154,33 +335,33 @@ class ChatApp {
         this.showLoading(false);
         this.addLog('✅ Connected to Agentic AI Demo', 'SUCCESS');
         
-        // Start ping interval for connection health
         this.startPingInterval();
-        
-        // Add celebration animation
         this.celebrateConnection();
     }
 
     celebrateConnection() {
         const statusIndicator = document.getElementById('status-indicator');
-        statusIndicator.style.animation = 'none';
-        setTimeout(() => {
-            statusIndicator.style.animation = 'pulse 1s ease-in-out 3';
-        }, 100);
+        if (statusIndicator) {
+            statusIndicator.style.animation = 'none';
+            setTimeout(() => {
+                statusIndicator.style.animation = 'pulse 1s ease-in-out 3';
+            }, 100);
+        }
     }
 
     onMessage(event) {
         try {
+            console.log('📨 Received message:', event.data);
             const data = JSON.parse(event.data);
             
             switch (data.type) {
                 case 'response':
+                    console.log('🤖 AI Response:', data.content);
                     this.addMessage(data.content, 'assistant', data.timestamp);
                     this.hideTypingIndicator();
                     break;
                     
                 case 'log':
-                    // Show all logs except the most verbose ones
                     if (!data.message.includes('Response delivered to client_')) {
                         this.addLog(data.message, data.level, data.timestamp);
                     }
@@ -191,83 +372,156 @@ class ChatApp {
                     break;
                     
                 case 'error':
+                    console.error('❌ Server error:', data.content);
                     this.addMessage(data.content, 'error', data.timestamp);
                     this.hideTypingIndicator();
+                    this.addLog('❌ Server error: ' + data.content, 'ERROR');
                     break;
                     
                 case 'pong':
-                    // Ping received, connection is healthy
+                    console.log('🏓 Pong received');
                     break;
+                    
+                default:
+                    console.warn('Unknown message type:', data.type);
             }
         } catch (error) {
-            // Don't log parsing errors to UI
+            console.error('❌ Error parsing message:', error, 'Raw data:', event.data);
         }
     }
 
-    onConnectionClose() {
+    onConnectionClose(event) {
+        console.log('🔌 WebSocket closed:', event.code, event.reason);
         this.isConnected = false;
         this.updateConnectionStatus(false);
-        this.addLog('🔌 Disconnected from Agentic AI Demo server', 'WARNING');
+        this.addLog(`🔌 Disconnected from server (Code: ${event.code})`, 'WARNING');
         this.hideTypingIndicator();
         
-        // Clear ping interval
+        // Save before attempting reconnect
+        this.saveCacheToStorage();
+        
         if (this.pingInterval) {
             clearInterval(this.pingInterval);
         }
         
-        // Attempt to reconnect
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
             this.reconnectAttempts++;
             const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
             
+            console.log(`🔄 Reconnect attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts} in ${delay}ms`);
             this.addLog(`🔄 Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`, 'INFO');
             
             setTimeout(() => {
                 this.connect();
             }, delay);
         } else {
+            console.error('❌ Max reconnection attempts reached');
             this.addLog('❌ Max reconnection attempts reached', 'ERROR');
             this.showError('Connection lost. Please refresh the page to reconnect to Agentic AI Demo.');
         }
     }
 
     onConnectionError(error) {
-        this.addLog(`WebSocket error: ${error.message || 'Unknown error'}`, 'ERROR');
+        console.error('❌ WebSocket error:', error);
+        this.addLog(`❌ WebSocket error: ${error.message || 'Unknown error'}`, 'ERROR');
         this.updateConnectionStatus(false);
     }
+
+    // ==================== MESSAGE HANDLING ====================
 
     sendMessage() {
         const message = this.messageInput.value.trim();
         
         if (!message) {
+            console.warn('⚠️ Empty message, not sending');
             return;
         }
         
         if (!this.isConnected) {
+            console.error('❌ Not connected to server');
             this.showError('Not connected to Agentic AI Demo server');
             return;
         }
         
-        // Add user message to chat
+        if (this.ws.readyState !== WebSocket.OPEN) {
+            console.error('❌ WebSocket not ready:', this.ws.readyState);
+            this.showError('Connection not ready. Please wait...');
+            return;
+        }
+        
+        console.log('📤 Sending message:', message);
+        
         this.addMessage(message, 'user');
         this.messageCount++;
         this.updateMessageCount();
         
-        // Clear input with animation
         this.animateInputClear();
         
-        // Send to server
         const messageData = {
             type: 'message',
             content: message,
-            client_id: this.clientId
+            client_id: this.clientId,
+            timestamp: new Date().toISOString()
         };
         
         try {
             this.ws.send(JSON.stringify(messageData));
+            console.log('✅ Message sent successfully');
             this.showTypingIndicator();
+            this.addLog('📤 Message sent to AI agent', 'INFO');
         } catch (error) {
-            this.showError('Failed to send message to AI Agent');
+            console.error('❌ Failed to send message:', error);
+            this.showError('Failed to send message: ' + error.message);
+            this.addLog('❌ Failed to send message: ' + error.message, 'ERROR');
+        }
+    }
+
+    addMessage(content, type, timestamp = null) {
+        const time = timestamp ? new Date(timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+        
+        // Add to cache
+        this.addToCache(content, type, time);
+        
+        // Add to DOM
+        this.addMessageToDOM(content, type, time, true);
+    }
+
+    addMessageToDOM(content, type, timestamp = null, animate = true) {
+        const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
+        if (welcomeMessage) {
+            welcomeMessage.style.transition = 'all 0.3s ease';
+            welcomeMessage.style.opacity = '0';
+            welcomeMessage.style.transform = 'scale(0.9)';
+            setTimeout(() => welcomeMessage.remove(), 300);
+        }
+        
+        const messageEl = document.createElement('div');
+        messageEl.className = `message ${type}`;
+        
+        const time = timestamp || new Date().toLocaleTimeString();
+        
+        let avatarIcon = '';
+        if (type === 'user') {
+            avatarIcon = '<i class="fas fa-user"></i>';
+        } else if (type === 'assistant') {
+            avatarIcon = '<i class="fas fa-robot"></i>';
+        } else if (type === 'error') {
+            avatarIcon = '<i class="fas fa-exclamation-triangle"></i>';
+        }
+        
+        messageEl.innerHTML = `
+            <div class="message-avatar">${avatarIcon}</div>
+            <div class="message-content">
+                <div class="message-text">${this.escapeHtml(content)}</div>
+                <div class="message-time">${time}</div>
+            </div>
+        `;
+        
+        this.chatMessages.appendChild(messageEl);
+        this.smoothScrollToBottom(this.chatMessages);
+        
+        if (animate && type === 'assistant') {
+            this.addTypingEffect(messageEl.querySelector('.message-text'));
         }
     }
 
@@ -280,13 +534,7 @@ class ChatApp {
         }, 150);
     }
 
-    addMessage(content, type, timestamp = null) {
-        const time = timestamp ? new Date(timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
-        this.addMessageToDOM(content, type, time);
-        
-        // Save to cache after adding a new message
-        this.saveMessagesToCache();
-    }
+    // ==================== UI HELPERS ====================
 
     addLog(message, level = 'INFO', timestamp = null) {
         const logEl = document.createElement('div');
@@ -305,18 +553,15 @@ class ChatApp {
         
         this.logsContainer.appendChild(logEl);
         
-        // Highlight important logs
         if (level === 'ERROR' || level === 'SUCCESS') {
             this.highlightLog(logEl, level);
         }
         
-        // Keep only last 100 logs
         const logs = this.logsContainer.querySelectorAll('.log-entry');
         if (logs.length > 100) {
             logs[0].remove();
         }
         
-        // Auto-scroll to bottom with smooth animation
         this.smoothScrollToBottom(this.logsContainer);
     }
 
@@ -340,7 +585,7 @@ class ChatApp {
         const animateScroll = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out cubic
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
             
             element.scrollTop = start + (end - start) * easeProgress;
             
@@ -353,7 +598,6 @@ class ChatApp {
     }
 
     handleTypingIndicator(clientId, isTyping) {
-        // Only show typing indicator for other clients
         if (clientId !== this.clientId && isTyping) {
             this.showTypingIndicator();
         } else if (clientId !== this.clientId && !isTyping) {
@@ -415,12 +659,12 @@ class ChatApp {
         this.pingInterval = setInterval(() => {
             if (this.isConnected && this.ws.readyState === WebSocket.OPEN) {
                 this.ws.send(JSON.stringify({ type: 'ping' }));
+                console.log('🏓 Ping sent');
             }
-        }, 30000); // Ping every 30 seconds
+        }, 30000);
     }
 
     clearChat() {
-        // Add fade out animation to existing messages
         const messages = this.chatMessages.querySelectorAll('.message');
         messages.forEach((msg, index) => {
             setTimeout(() => {
@@ -430,7 +674,6 @@ class ChatApp {
             }, index * 50);
         });
         
-        // Clear and show welcome message after animation
         setTimeout(() => {
             this.chatMessages.innerHTML = `
                 <div class="welcome-message">
@@ -441,27 +684,24 @@ class ChatApp {
             `;
             this.messageCount = 0;
             this.updateMessageCount();
-            
-            // Clear the cache when chat is cleared
             this.clearMessageCache();
             this.addLog('🗑️ Chat history cleared', 'INFO');
         }, messages.length * 50 + 300);
     }
 
-    toggleLogs() {
-        const logsSection = document.querySelector('.logs-section');
-        logsSection.classList.toggle('hidden');
+    // toggleLogs() {
+    //     const logsSection = document.querySelector('.logs-section');
+    //     logsSection.classList.toggle('hidden');
         
-        const icon = this.toggleLogsBtn.querySelector('i');
-        if (logsSection.classList.contains('hidden')) {
-            icon.className = 'fas fa-eye-slash';
-        } else {
-            icon.className = 'fas fa-eye';
-        }
-    }
+    //     const icon = this.toggleLogsBtn.querySelector('i');
+    //     if (logsSection.classList.contains('hidden')) {
+    //         icon.className = 'fas fa-eye-slash';
+    //     } else {
+    //         icon.className = 'fas fa-eye';
+    //     }
+    // }
 
     clearLogs() {
-        // Add fade out animation
         const logs = this.logsContainer.querySelectorAll('.log-entry');
         logs.forEach((log, index) => {
             setTimeout(() => {
@@ -471,7 +711,6 @@ class ChatApp {
             }, index * 20);
         });
         
-        // Clear and show cleared message
         setTimeout(() => {
             this.logsContainer.innerHTML = `
                 <div class="log-entry info">
@@ -484,10 +723,12 @@ class ChatApp {
     }
 
     showLoading(show) {
-        if (show) {
-            this.loadingOverlay.classList.remove('hidden');
-        } else {
-            this.loadingOverlay.classList.add('hidden');
+        if (this.loadingOverlay) {
+            if (show) {
+                this.loadingOverlay.classList.remove('hidden');
+            } else {
+                this.loadingOverlay.classList.add('hidden');
+            }
         }
     }
 
@@ -495,7 +736,6 @@ class ChatApp {
         this.errorMessage.textContent = message;
         this.errorModal.classList.add('active');
         
-        // Add shake animation to error modal
         this.errorModal.style.animation = 'none';
         setTimeout(() => {
             this.errorModal.style.animation = 'shake 0.5s ease-in-out';
@@ -516,128 +756,6 @@ class ChatApp {
         return div.innerHTML;
     }
 
-    // localStorage functions for caching messages
-    saveMessagesToCache() {
-        try {
-            const messages = [];
-            const messageElements = this.chatMessages.querySelectorAll('.message');
-            
-            console.log(`Saving ${messageElements.length} messages to cache`);
-            
-            messageElements.forEach(el => {
-                const type = el.classList.contains('user') ? 'user' :
-                             el.classList.contains('assistant') ? 'assistant' : 'error';
-                const textEl = el.querySelector('.message-text');
-                const timeEl = el.querySelector('.message-time');
-                
-                if (textEl && timeEl) {
-                    messages.push({
-                        type: type,
-                        content: textEl.textContent,
-                        timestamp: timeEl.textContent
-                    });
-                }
-            });
-            
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-            localStorage.setItem('messageCount', this.messageCount.toString());
-            console.log('Messages saved to cache:', messages.length);
-        } catch (error) {
-            console.error('Error saving messages to cache:', error);
-        }
-    }
-
-    loadCachedMessages() {
-        try {
-            const cachedMessages = localStorage.getItem('chatMessages');
-            const cachedCount = localStorage.getItem('messageCount');
-            
-            console.log('Loading cached messages...');
-            
-            if (cachedMessages) {
-                const messages = JSON.parse(cachedMessages);
-                console.log(`Found ${messages.length} cached messages`);
-                
-                // Remove welcome message if it exists
-                const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
-                if (welcomeMessage) {
-                    welcomeMessage.remove();
-                }
-                
-                // Load cached messages
-                messages.forEach(msg => {
-                    this.addMessageToDOM(msg.content, msg.type, msg.timestamp);
-                });
-                
-                // Update message count
-                if (cachedCount) {
-                    this.messageCount = parseInt(cachedCount, 10);
-                    this.updateMessageCount();
-                }
-                
-                // Save the loaded state to ensure it persists
-                this.saveMessagesToCache();
-                console.log('Cached messages loaded successfully');
-            } else {
-                console.log('No cached messages found');
-            }
-        } catch (error) {
-            console.error('Error loading cached messages:', error);
-        }
-    }
-
-    clearMessageCache() {
-        try {
-            console.log('Clearing message cache...');
-            localStorage.removeItem('chatMessages');
-            localStorage.removeItem('messageCount');
-            console.log('Message cache cleared successfully');
-        } catch (error) {
-            console.error('Error clearing message cache:', error);
-        }
-    }
-
-    addMessageToDOM(content, type, timestamp = null) {
-        // Remove welcome message if it exists
-        const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
-        if (welcomeMessage) {
-            welcomeMessage.style.transition = 'all 0.3s ease';
-            welcomeMessage.style.opacity = '0';
-            welcomeMessage.style.transform = 'scale(0.9)';
-            setTimeout(() => welcomeMessage.remove(), 300);
-        }
-        
-        const messageEl = document.createElement('div');
-        messageEl.className = `message ${type}`;
-        
-        const time = timestamp || new Date().toLocaleTimeString();
-        
-        let avatarIcon = '';
-        if (type === 'user') {
-            avatarIcon = '<i class="fas fa-user"></i>';
-        } else if (type === 'assistant') {
-            avatarIcon = '<i class="fas fa-robot"></i>';
-        } else if (type === 'error') {
-            avatarIcon = '<i class="fas fa-exclamation-triangle"></i>';
-        }
-        
-        messageEl.innerHTML = `
-            <div class="message-avatar">${avatarIcon}</div>
-            <div class="message-content">
-                <div class="message-text">${this.escapeHtml(content)}</div>
-                <div class="message-time">${time}</div>
-            </div>
-        `;
-        
-        this.chatMessages.appendChild(messageEl);
-        this.smoothScrollToBottom(this.chatMessages);
-        
-        // Add typing effect for AI messages
-        if (type === 'assistant') {
-            this.addTypingEffect(messageEl.querySelector('.message-text'));
-        }
-    }
-
     addTypingEffect(element) {
         const text = element.textContent;
         element.textContent = '';
@@ -648,38 +766,44 @@ class ChatApp {
             if (index < text.length) {
                 element.textContent += text[index];
                 index++;
-                setTimeout(typeChar, 10); // Adjust typing speed here
+                setTimeout(typeChar, 5);
             }
         };
         
-        setTimeout(typeChar, 300); // Start typing after a short delay
+        setTimeout(typeChar, 100);
     }
 }
 
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new ChatApp();
+    console.log('🚀 Initializing Agentic AI Demo...');
+    window.chatApp = new ChatApp();
+    
+    // Add cache stats to console
+    console.log('💾 Cache Statistics:', window.chatApp.getCacheStats());
+    
+    // Expose export function globally
+    window.exportChatHistory = () => window.chatApp.exportChatHistory();
 });
 
-// Add some utility functions
-window.addEventListener('online', () => {
-    console.log('Network connection restored');
-});
-
-window.addEventListener('offline', () => {
-    console.log('Network connection lost');
-});
-
-// Prevent accidental page refresh during active conversation
-window.addEventListener('beforeunload', (e) => {
-    const messageCount = document.querySelectorAll('.message').length;
-    if (messageCount > 2) { // More than just welcome message
+// Add keyboard shortcut for export (Ctrl+Shift+E)
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'E') {
         e.preventDefault();
-        e.returnValue = 'Are you sure you want to leave the Agentic AI Demo?';
+        if (window.chatApp) {
+            window.chatApp.exportChatHistory();
+        }
     }
 });
 
-// Add CSS animation for shake effect
+window.addEventListener('online', () => {
+    console.log('🌐 Network connection restored');
+});
+
+window.addEventListener('offline', () => {
+    console.log('📡 Network connection lost');
+});
+
 const style = document.createElement('style');
 style.textContent = `
     @keyframes shake {

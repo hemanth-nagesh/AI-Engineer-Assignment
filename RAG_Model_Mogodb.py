@@ -11,8 +11,21 @@ load_dotenv()
 genai_client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 # Connect to your MongoDB deployment
 DB_URL = os.getenv("MONGODB_URL")
-mongo_client = MongoClient(DB_URL)
-collection = mongo_client["sample_mflix"]["ragpdf"]
+mongo_client = None
+collection = None
+
+try:
+    if DB_URL:
+        mongo_client = MongoClient(DB_URL)
+        # Test the connection
+        mongo_client.admin.command('ping')
+        collection = mongo_client["sample_mflix"]["ragpdf"]
+        print("MongoDB connection successful")
+        # print(collection)
+except Exception as e:
+    print(f"Warning: MongoDB connection failed: {e}")
+    mongo_client = None
+    collection = None
 
 def get_embedding(text):
     """
@@ -39,6 +52,10 @@ def get_embedding(text):
 # Define a function to run vector search queries
 def get_query_results(query):
     """Gets results from a vector search query."""
+    if collection is None:
+        print("Warning: MongoDB collection not initialized, returning empty results")
+        return ""
+    
     print("Getting results for query:", query)
     query_embedding = get_embedding(query)
     print("Query Embedding done")
@@ -68,6 +85,6 @@ def get_query_results(query):
     context_string = " ".join([doc["text"] for doc in array_of_results])
     return context_string
 
-if __name__ == "__main__":
-    query = "What is stock market?"
-    print(get_query_results(query))
+# if __name__ == "__main__":
+#     query = "What is stock market?"
+#     print(get_query_results(query))

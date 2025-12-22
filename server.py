@@ -2,11 +2,13 @@ import os
 import asyncio
 import json
 import logging
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import List, Dict, Any
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uuid
 from Langgraph_Agent import ConversationManager
@@ -22,8 +24,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Lifespan context manager for startup and shutdown events
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup event
+    logger.info("FastAPI server started successfully")
+    yield
+    # Shutdown event (if needed in future)
+    logger.info("FastAPI server shutting down")
+
 # Initialize FastAPI app
-app = FastAPI(title="AI Chat Interface", version="1.0.0")
+app = FastAPI(title="AI Chat Interface", version="1.0.0", lifespan=lifespan)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -124,6 +144,7 @@ async def get_chat_page():
 async def websocket_endpoint(websocket: WebSocket, client_id: str):
     """WebSocket endpoint for real-time communication"""
     await manager.connect(websocket, client_id)
+    logger.info(f"✅ Client {client_id} connected successfully")
     
     try:
         while True:
@@ -155,8 +176,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     elif any(keyword in user_message.lower() for keyword in ["stock", "market", "investment", "finance"]):
                         await manager.broadcast_log("📚 Called RAG model")
                     
-                    response = conv_manager.send_message(user_message)
-                    #
+                    # FIX: Run synchronous send_message in executor
+                    loop = asyncio.get_event_loop()
+                    response = await loop.run_in_executor(
+                        None, 
+                        conv_manager.send_message, 
+                        user_message
+                    )
+                    
                     # Send response back to client
                     response_data = {
                         "type": "response",
@@ -170,7 +197,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     
                 except Exception as e:
                     error_message = f"Error processing message: {str(e)}"
-                    logger.error(f"❌ {error_message}")
+                    logger.error(f"❌ {error_message}", exc_info=True)
                     
                     error_data = {
                         "type": "error",
@@ -195,9 +222,10 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                 await websocket.send_text(json.dumps(pong_data))
     
     except WebSocketDisconnect:
+        logger.info(f"🔌 Client {client_id} disconnected")
         manager.disconnect(websocket, client_id)
     except Exception as e:
-        logger.error(f"WebSocket error for client {client_id}: {str(e)}")
+        logger.error(f"❌ WebSocket error for client {client_id}: {str(e)}", exc_info=True)
         manager.disconnect(websocket, client_id)
 
 
@@ -247,12 +275,6 @@ async def get_vector_store_info():
             "error": str(e)
         }
 
-# Initialize document ingestion on startup
-@app.on_event("startup")
-async def startup_event():
-    """Initialize the application on startup"""
-    logger.info("FastAPI server started successfully")
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
