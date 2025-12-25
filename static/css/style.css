@@ -16,6 +16,7 @@
     --bg-primary: #0f0f23;
     --bg-secondary: #1a1a2e;
     --bg-tertiary: #16213e;
+    --card-bg: #16213e;
     --text-primary: #f8fafc;
     --text-secondary: #e2e8f0;
     --text-muted: #94a3b8;
@@ -242,7 +243,233 @@ body::before {
     display: flex;
     gap: 0.5rem;
 }
+/* Add these styles to your existing style.css file */
 
+/* Header Buttons Container */
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* PDF Modal Styles */
+.pdf-modal {
+    z-index: 2000;
+}
+
+.pdf-modal-content {
+    /* Wider, near-fullscreen PDF modal */
+    width: 98vw;
+    max-width: 1600px;
+    height: 95vh;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.pdf-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.pdf-modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pdf-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.pdf-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* PDF Controls */
+.pdf-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 16px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.pdf-btn {
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.pdf-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.pdf-btn:active {
+    transform: translateY(0);
+}
+
+.pdf-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.pdf-page-info {
+    padding: 8px 16px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.pdf-zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+}
+
+#pdf-zoom-level {
+    min-width: 50px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* PDF Viewer Container */
+.pdf-viewer-container {
+    flex: 1;
+    overflow: auto;
+    background: #525659;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-canvas-container {
+    /* Less padding, full-height container so canvas can grow */
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 100%;
+}
+
+.pdf-canvas-container canvas {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background: white;
+    max-width: 100%;
+    /* Allow canvas to take most of the modal height while keeping aspect ratio */
+    max-height: calc(95vh - 200px);
+    width: auto !important;
+    height: auto !important;
+}
+
+/* PDF Loading Indicator */
+.pdf-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.pdf-loading i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    color: var(--primary-color);
+}
+
+.pdf-loading p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.pdf-loading.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pdf-modal-content {
+        width: 95vw;
+        height: 95vh;
+    }
+
+    .pdf-controls {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .pdf-zoom-controls {
+        border: none;
+        padding: 0;
+    }
+
+    .pdf-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .header-buttons button {
+        width: 100%;
+    }
+}
 /* Chat Messages */
 .chat-messages {
     flex: 1;

@@ -31,9 +31,14 @@
                 <div class="chat-container">
                     <div class="chat-header">
                         <h2><i class="fas fa-comments"></i> Chat with AI Assistant</h2>
-                        <button id="clear-chat" class="btn btn-secondary">
-                            <i class="fas fa-trash"></i> Clear Chat
-                        </button>
+                        <div class="header-buttons">
+                            <button id="view-pdf" class="btn btn-primary">
+                                <i class="fas fa-file-pdf"></i> View Document
+                            </button>
+                            <button id="clear-chat" class="btn btn-secondary">
+                                <i class="fas fa-trash"></i> Clear Chat
+                            </button>
+                        </div>
                     </div>
                     
                     <div id="chat-messages" class="chat-messages">
@@ -140,7 +145,43 @@
             </div>
         </div>
     </div>
-
+    <!-- PDF Viewer Modal -->
+    <div id="pdf-modal" class="modal pdf-modal">
+        <div class="modal-content pdf-modal-content">
+            <div class="pdf-modal-header">
+                <h3><i class="fas fa-file-pdf"></i> Knowledge Base Document</h3>
+                <button class="modal-close pdf-close" id="pdf-close-btn">&times;</button>
+            </div>
+            <div class="pdf-controls">
+                <button id="pdf-prev" class="pdf-btn" title="Previous Page">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <span id="pdf-page-info" class="pdf-page-info">Page 1 of 1</span>
+                <button id="pdf-next" class="pdf-btn" title="Next Page">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="pdf-zoom-controls">
+                    <button id="pdf-zoom-out" class="pdf-btn" title="Zoom Out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span id="pdf-zoom-level">100%</span>
+                    <button id="pdf-zoom-in" class="pdf-btn" title="Zoom In">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                </div>
+                <button id="pdf-download" class="pdf-btn" title="Download PDF">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            <div class="pdf-viewer-container">
+                <div id="pdf-canvas-container" class="pdf-canvas-container"></div>
+                <div id="pdf-loading" class="pdf-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading PDF...</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/static/js/app.js"></script>
 </body>
 </html>

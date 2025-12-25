@@ -22,6 +22,12 @@ class ChatApp {
         this.metadataKey = 'agenticAI_metadata';
         this.maxCacheSize = 500; // Maximum messages to cache
         
+        // PDF properties
+        this.pdfDoc = null;
+        this.pdfCurrentPage = 1;
+        this.pdfScale = 1.5;
+        this.pdfUrl = '/static/documents/knowledge_base.pdf';
+        
         this.initializeElements();
         this.bindEvents();
         this.loadCachedData();
@@ -70,6 +76,7 @@ class ChatApp {
         this.messageInput = document.getElementById('message-input');
         this.sendButton = document.getElementById('send-button');
         this.clearChatBtn = document.getElementById('clear-chat');
+        this.viewPdfBtn = document.getElementById('view-pdf');
         this.typingIndicator = document.getElementById('typing-indicator');
         this.charCount = document.getElementById('char-count');
         
@@ -85,6 +92,19 @@ class ChatApp {
         // Modal elements
         this.errorModal = document.getElementById('error-modal');
         this.errorMessage = document.getElementById('error-message');
+        
+        // PDF viewer elements
+        this.pdfModal = document.getElementById('pdf-modal');
+        this.pdfCloseBtn = document.getElementById('pdf-close-btn');
+        this.pdfPrevBtn = document.getElementById('pdf-prev');
+        this.pdfNextBtn = document.getElementById('pdf-next');
+        this.pdfZoomInBtn = document.getElementById('pdf-zoom-in');
+        this.pdfZoomOutBtn = document.getElementById('pdf-zoom-out');
+        this.pdfDownloadBtn = document.getElementById('pdf-download');
+        this.pdfPageInfo = document.getElementById('pdf-page-info');
+        this.pdfZoomLevel = document.getElementById('pdf-zoom-level');
+        this.pdfCanvasContainer = document.getElementById('pdf-canvas-container');
+        this.pdfLoading = document.getElementById('pdf-loading');
         
         // Quick action buttons
         this.quickActions = document.querySelectorAll('.quick-action');
@@ -102,6 +122,9 @@ class ChatApp {
         
         this.sendButton.addEventListener('click', () => this.sendMessage());
         this.clearChatBtn.addEventListener('click', () => this.clearChat());
+        if (this.viewPdfBtn) {
+            this.viewPdfBtn.addEventListener('click', () => this.openPDFViewer());
+        }
         
         // Logs events
         // this.toggleLogsBtn.addEventListener('click', () => this.toggleLogs());
@@ -128,6 +151,35 @@ class ChatApp {
             }
         });
         
+        // PDF viewer events
+        if (this.pdfCloseBtn) {
+            this.pdfCloseBtn.addEventListener('click', () => this.closePDFViewer());
+        }
+        if (this.pdfPrevBtn) {
+            this.pdfPrevBtn.addEventListener('click', () => this.changePDFPage(-1));
+        }
+        if (this.pdfNextBtn) {
+            this.pdfNextBtn.addEventListener('click', () => this.changePDFPage(1));
+        }
+        if (this.pdfZoomInBtn) {
+            this.pdfZoomInBtn.addEventListener('click', () => this.zoomPDF(0.25));
+        }
+        if (this.pdfZoomOutBtn) {
+            this.pdfZoomOutBtn.addEventListener('click', () => this.zoomPDF(-0.25));
+        }
+        if (this.pdfDownloadBtn) {
+            this.pdfDownloadBtn.addEventListener('click', () => this.downloadPDF());
+        }
+        
+        // Close PDF modal on background click
+        if (this.pdfModal) {
+            this.pdfModal.addEventListener('click', (e) => {
+                if (e.target === this.pdfModal) {
+                    this.closePDFViewer();
+                }
+            });
+        }
+        
         // Window events
         window.addEventListener('beforeunload', () => {
             this.saveCacheToStorage();
@@ -142,6 +194,23 @@ class ChatApp {
                 this.saveCacheToStorage();
             }
         });
+        
+        // Keyboard shortcuts for PDF viewer
+        document.addEventListener('keydown', (e) => {
+            if (this.pdfModal && this.pdfModal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    this.closePDFViewer();
+                } else if (e.key === 'ArrowLeft') {
+                    this.changePDFPage(-1);
+                } else if (e.key === 'ArrowRight') {
+                    this.changePDFPage(1);
+                } else if (e.key === '+' || e.key === '=') {
+                    this.zoomPDF(0.25);
+                } else if (e.key === '-') {
+                    this.zoomPDF(-0.25);
+                }
+            }
+        });
     }
 
     // ==================== ENHANCED CACHING SYSTEM ====================
@@ -152,6 +221,7 @@ class ChatApp {
             this.saveCacheToStorage();
         }, 10000);
     }
+
 
     loadCachedData() {
         try {
@@ -576,6 +646,154 @@ class ChatApp {
         }, 2000);
     }
 
+    // ==================== PDF VIEWER METHODS ====================
+
+    async openPDFViewer() {
+        try {
+            this.pdfModal.classList.add('active');
+            this.pdfLoading.classList.remove('hidden');
+            this.addLog('📄 Opening PDF viewer...', 'INFO');
+
+            // Load PDF.js library if not already loaded
+            if (!window.pdfjsLib) {
+                await this.loadPDFJS();
+            }
+
+            // Load the PDF
+            const loadingTask = pdfjsLib.getDocument(this.pdfUrl);
+            this.pdfDoc = await loadingTask.promise;
+            
+            console.log('✅ PDF loaded successfully:', this.pdfDoc.numPages, 'pages');
+            this.addLog(`✅ PDF loaded: ${this.pdfDoc.numPages} pages`, 'SUCCESS');
+
+            // Render first page
+            this.pdfCurrentPage = 1;
+            await this.renderPDFPage(this.pdfCurrentPage);
+            
+            this.pdfLoading.classList.add('hidden');
+            this.updatePDFControls();
+            
+        } catch (error) {
+            console.error('❌ Error loading PDF:', error);
+            this.addLog('❌ Failed to load PDF: ' + error.message, 'ERROR');
+            this.showError('Failed to load PDF document. Please ensure the file exists.');
+            this.pdfLoading.classList.add('hidden');
+        }
+    }
+
+    async loadPDFJS() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+            script.onload = () => {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 
+                    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                resolve();
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    closePDFViewer() {
+        this.pdfModal.classList.remove('active');
+        this.addLog('📄 PDF viewer closed', 'INFO');
+    }
+
+    async renderPDFPage(pageNum) {
+        try {
+            const page = await this.pdfDoc.getPage(pageNum);
+            const viewport = page.getViewport({ scale: this.pdfScale });
+
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Clear previous content
+            this.pdfCanvasContainer.innerHTML = '';
+            this.pdfCanvasContainer.appendChild(canvas);
+
+            // Render page
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+
+            await page.render(renderContext).promise;
+            console.log(`✅ Rendered page ${pageNum}`);
+            
+        } catch (error) {
+            console.error('❌ Error rendering page:', error);
+            this.addLog('❌ Failed to render PDF page', 'ERROR');
+        }
+    }
+
+    async changePDFPage(delta) {
+        const newPage = this.pdfCurrentPage + delta;
+        
+        if (newPage < 1 || newPage > this.pdfDoc.numPages) {
+            return;
+        }
+        
+        this.pdfCurrentPage = newPage;
+        this.pdfLoading.classList.remove('hidden');
+        
+        await this.renderPDFPage(this.pdfCurrentPage);
+        
+        this.pdfLoading.classList.add('hidden');
+        this.updatePDFControls();
+        this.addLog(`📄 Navigated to page ${this.pdfCurrentPage}`, 'INFO');
+    }
+
+    async zoomPDF(delta) {
+        const newScale = this.pdfScale + delta;
+        
+        if (newScale < 0.5 || newScale > 3) {
+            return;
+        }
+        
+        this.pdfScale = newScale;
+        this.pdfLoading.classList.remove('hidden');
+        
+        await this.renderPDFPage(this.pdfCurrentPage);
+        
+        this.pdfLoading.classList.add('hidden');
+        this.updatePDFControls();
+        this.addLog(`🔍 Zoom: ${Math.round(this.pdfScale * 100)}%`, 'INFO');
+    }
+
+    updatePDFControls() {
+        if (!this.pdfDoc) return;
+        
+        // Update page info
+        this.pdfPageInfo.textContent = `Page ${this.pdfCurrentPage} of ${this.pdfDoc.numPages}`;
+        
+        // Update zoom level
+        this.pdfZoomLevel.textContent = `${Math.round(this.pdfScale * 100)}%`;
+        
+        // Update button states
+        this.pdfPrevBtn.disabled = this.pdfCurrentPage === 1;
+        this.pdfNextBtn.disabled = this.pdfCurrentPage === this.pdfDoc.numPages;
+        this.pdfZoomOutBtn.disabled = this.pdfScale <= 0.5;
+        this.pdfZoomInBtn.disabled = this.pdfScale >= 3;
+    }
+
+    downloadPDF() {
+        try {
+            const link = document.createElement('a');
+            link.href = this.pdfUrl;
+            link.download = 'knowledge_base.pdf';
+            link.click();
+            this.addLog('📥 PDF download started', 'SUCCESS');
+        } catch (error) {
+            console.error('❌ Error downloading PDF:', error);
+            this.addLog('❌ Failed to download PDF', 'ERROR');
+            this.showError('Failed to download PDF');
+        }
+    }
+
     smoothScrollToBottom(element) {
         const start = element.scrollTop;
         const end = element.scrollHeight - element.clientHeight;
@@ -803,13 +1021,3 @@ window.addEventListener('online', () => {
 window.addEventListener('offline', () => {
     console.log('📡 Network connection lost');
 });
-
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-        20%, 40%, 60%, 80% { transform: translateX(5px); }
-    }
-`;
-document.head.appendChild(style);
